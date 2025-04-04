@@ -1,13 +1,11 @@
 import { GlobalProvider } from './context/GlobalContext';
+import Main from './components/Main';
 
 export default function App() {
   return (
     <>
       <GlobalProvider>
-        <div className='container py-4 text-white'>
-          <h1>React BoolFlix</h1>
-          {/* qui vanno poi inseriti i componenti */}
-        </div>
+        <Main />
       </GlobalProvider>
     </>
   )
