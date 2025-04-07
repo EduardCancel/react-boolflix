@@ -24,7 +24,7 @@ function getStars(vote) {
 export default function Main() {
     const { searchText, setSearchText, handleSearch, searchResults = [] } = useGlobalContext();
 
-    const imageUrlBase = "https://image.tmdb.org/t/p/w500";
+    const imgCard = "https://image.tmdb.org/t/p/w342";
 
     return (
         <main className="container py-4">
@@ -53,20 +53,19 @@ export default function Main() {
             <section>
                 <ul className="list-group">
                     {searchResults.map((item) => {
-                        const imageUrl = item.poster_path ? `${imageUrlBase}${item.poster_path}` : null;
+
+                        const imageUrl = `${imgCard}${item.poster_path}`;
 
                         return (
                             <li key={item.id} className="list-group-item d-flex align-items-center">
                                 {/* Colonna per l'immagine */}
                                 <div className="me-3">
-                                    {imageUrl && (
-                                        <img
-                                            src={imageUrl}
-                                            alt={item.title || item.name}
-                                            className="img-fluid rounded"
-                                            style={{ width: "100px" }}
-                                        />
-                                    )}
+                                    <img
+                                        src={imageUrl}
+                                        alt={item.title || item.name}
+                                        className="img-fluid rounded"
+                                        style={{ width: "100px" }}
+                                    />
                                 </div>
 
                                 {/* Colonna per il testo e informazioni */}
