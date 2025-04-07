@@ -1,12 +1,13 @@
-import { GlobalProvider } from './context/GlobalContext';
-import Main from './components/Main';
+import React from "react";
+import { GlobalProvider } from "./context/GlobalContext";
+import HomePage from "./Pages/HomePage";
+import Header from "./Components/Header";
 
 export default function App() {
   return (
-    <>
-      <GlobalProvider>
-        <Main />
-      </GlobalProvider>
-    </>
-  )
+    <GlobalProvider>
+      <Header />
+      <HomePage />
+    </GlobalProvider>
+  );
 }
