@@ -9,12 +9,22 @@ function getFlagEmoji(langCode) {
     if (langCode === "ko") return "🇰🇷";
     if (langCode === "zh") return "🇨🇳";
     if (langCode === "de") return "🇩🇪";
+    return "🏳️";
+}
 
-    return "🏳️"; // bandiera bianca se non troviamo niente
+function getStars(vote) {
+    const roundedVote = Math.ceil(vote / 2);
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+        stars.push(i < roundedVote ? "⭐" : "✩");
+    }
+    return stars.join(" ");
 }
 
 export default function Main() {
     const { searchText, setSearchText, handleSearch, searchResults = [] } = useGlobalContext();
+
+    const imageUrlBase = "https://image.tmdb.org/t/p/w500";
 
     return (
         <main className="container py-4">
@@ -41,20 +51,38 @@ export default function Main() {
             </header>
 
             <section>
-                {searchResults.length > 0 ? (
-                    <ul className="list-group">
-                        {searchResults.map((item) => (
-                            <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-                                <span>
-                                    <strong>{item.title}</strong> <br />
+                <ul className="list-group">
+                    {searchResults.map((item) => {
+                        const imageUrl = item.poster_path ? `${imageUrlBase}${item.poster_path}` : null;
+
+                        return (
+                            <li key={item.id} className="list-group-item d-flex align-items-center">
+                                {/* Colonna per l'immagine */}
+                                <div className="me-3">
+                                    {imageUrl && (
+                                        <img
+                                            src={imageUrl}
+                                            alt={item.title || item.name}
+                                            className="img-fluid rounded"
+                                            style={{ width: "100px" }}
+                                        />
+                                    )}
+                                </div>
+
+                                {/* Colonna per il testo e informazioni */}
+                                <div className="flex-grow-1">
+                                    <strong>{item.title || item.name}</strong> <br />
                                     Lingua: {getFlagEmoji(item.original_language)} | Voti: {item.vote_count}
-                                </span>
+                                </div>
+
+                                {/* Colonna per le stelle */}
+                                <div className="ms-3">
+                                    <span>{getStars(item.vote_average)}</span>
+                                </div>
                             </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="text-muted">Nessun risultato trovato.</p>
-                )}
+                        );
+                    })}
+                </ul>
             </section>
         </main>
     );
